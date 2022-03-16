@@ -13,10 +13,23 @@ class StoriesPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Top Stories -CBS News'),
         elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.read<NewsData>().initialvalues();
+              context.read<NewsData>().fetchData;
+            },
+            icon: const Icon(
+              Icons.refresh,
+            ),
+          ),
+        ],
         backgroundColor: Colors.orange[700],
       ),
       body: RefreshIndicator(
-        onRefresh: () async {},
+        onRefresh: () async {
+          await context.read<NewsData>().fetchData;
+        },
         child: Center(
           child: Consumer<NewsData>(
             builder: (context, value, child) {
